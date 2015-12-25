@@ -1,9 +1,10 @@
 from Tkinter import *
 import urllib2
 import linecache
-#What's left:Put the save icon command
-#Lower-Case function names and global variables
-#Capitalize constants
+'''What's left:
+-Put the save icon command
+-Lower-Case function names and global variables
+-Capitalize constants'''
 
 
 
