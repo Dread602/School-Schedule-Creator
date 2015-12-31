@@ -91,7 +91,6 @@ class MainWindow():
         
         ResultFineString6 = ResultFine[5].split(",")
 
-        
         A1 = ResultFineString1[0]
         A2 = ResultFineString1[1] 
         A3 = ResultFineString1[2]
@@ -212,8 +211,7 @@ class MainWindow():
         DateFrame = Frame(Window2)
         DateLabel = Label(DateFrame, text = "Date: %s"%Date, bg = "white", height = 3, width = 133)
         
-        
-        
+                
         DateLabel.pack()
         ScheduleFrame.pack()
         DateFrame.pack() 
