@@ -1,11 +1,11 @@
 from Tkinter import *
+import itertools
 import urllib2
 import linecache
-'''What's left:
--Put the save icon command
--Lower-Case function names and global variables
--Capitalize constants'''
-
+from PIL import ImageGrab
+#What's left:Put the save icon command
+#Lower-Case function names and global variables
+#Capitalize constants
 
 
 
@@ -13,7 +13,6 @@ class MainWindow():
     #Command functions
     def PrintName(self):
         global TheName
-        #print UserName.get()
         TheName = UserName.get()
         Window1.destroy()
         self.PostLogIn()
@@ -52,7 +51,7 @@ class MainWindow():
         Window2 = Tk()
         Window2.wm_title('RSS School Schedules')
         Window2.resizable(False, False)
-        Window2.geometry("938x548")
+        Window2.geometry("938x590")
         Window2.iconbitmap(default='ProgramIcon.ico')
         MainMenu = Menu(Window2)
         Window2.config(menu = MainMenu)
@@ -63,7 +62,7 @@ class MainWindow():
     #Toolbar and its icons
         ToolbarFrame = Frame(Window2, bd = 1, relief = RAISED)
         SaveImage = PhotoImage(file = "Save.gif")
-        SaveButton = Button(ToolbarFrame, image = SaveImage)
+        SaveButton = Button(ToolbarFrame, image = SaveImage, command = ImageGrab.grab().save("%s's Schedule.png" %TheName, "PNG"))
         SaveButton.pack(side = LEFT)
         RefreshImage = PhotoImage(file = "Refresh.gif")
         RefreshButton = Button(ToolbarFrame, image = RefreshImage, command = self.Refresh)
@@ -77,28 +76,22 @@ class MainWindow():
         StatusbarLabel.pack(side = LEFT)
         
     #URL reading:
-        ScheduleData = urllib2.urlopen("http://m.uploadedit.com/ba3n/1451050673276.txt")
+        ScheduleData = urllib2.urlopen("http://m.uploadedit.com/ba3n/1451094812124.txt")
         Result = ScheduleData.readlines()
         ResultFine = Result
         ResultFineString1 = ResultFine[0].split(",")
-        #print ResultFineString1[0]
 
         ResultFineString2 = ResultFine[1].split(",")
-        #print ResultFineString2[0]
 
         ResultFineString3 = ResultFine[2].split(",")
-        #print ResultFineString3[0]
 
         ResultFineString4 = ResultFine[3].split(",")
-        #print ResultFineString4[0]
 
         ResultFineString5 = ResultFine[4].split(",")
-        #print ResultFineString5[0]
+        
+        ResultFineString6 = ResultFine[5].split(",")
 
-        '''IGNORE:Result = [line.split(',') for line in ScheduleData.readlines()]
-        RefinedResult = Result[0]
-        print RefinedResult
-        '''
+        
         A1 = ResultFineString1[0]
         A2 = ResultFineString1[1] 
         A3 = ResultFineString1[2]
@@ -139,181 +132,91 @@ class MainWindow():
         E6 = ResultFineString5[5]
         E7 = ResultFineString5[6]
         E8 = ResultFineString5[7]
-      
-        #Schedule:
-        NewFrame = Frame(Window2)
+        Date = ResultFineString6[0]
+    #Schedule:
+        ScheduleFrame = Frame(Window2)
+        Empty = Label(ScheduleFrame ,text = "--------------", bg = "White", height = 5, width = 14)
+        Empty.grid(row = 0, column = 1)        
         
-        
-        
-        Empty = Label(NewFrame ,text = "--------------", bg = "White", height = 5, width = 14)
-        Empty.grid(row = 0, column = 1)
 
-        FirstClass = Label(NewFrame, text ="First class", bg = "White", height = 5, width = 14)
-        FirstClass.grid(row = 0, column = 2)
+        TheClassNoList = ['FirstClass', 'SecondClass', 'ThirdClass', 'FourthClass', 'FifthClass', 'SixthClass', 'SeventhClass', 'EighthClass']
+        TheList3 = [1, 1, 1, 1, 1, 1, 1, 1]
+        TheList4 = [2, 3, 4, 5, 6, 7, 8, 9]
 
-        SecondClass = Label(NewFrame ,text ="Second class", bg = "White", height = 5, width = 14)
-        SecondClass.grid(row = 0, column = 3)
-
-        ThirdClass = Label(NewFrame, text ="Third class", bg = "White", height = 5, width = 14)
-        ThirdClass.grid(row = 0, column = 4)
-
-        FourthClass = Label(NewFrame ,text ="Fourth class", bg = "White", height = 5, width = 14)
-        FourthClass.grid(row = 0, column = 5)
-
-        FifthClass = Label(NewFrame, text ="Fifth class", bg = "White", height = 5, width = 14)
-        FifthClass.grid(row = 0, column = 6)
-
-        SixthClass = Label(NewFrame, text ="Sixth class", bg = "White", height = 5, width = 14)
-        SixthClass.grid(row = 0, column = 7)
-
-        SeventhClass = Label(NewFrame, text ="Seventh class", bg = "White", height = 5, width = 14)
-        SeventhClass.grid(row = 0, column = 8)
-
-        EighthClass = Label(NewFrame, text ="Eigth class", bg = "White", height = 5, width = 14)
-        EighthClass.grid(row = 0, column = 9)
-        #Sunday:
-        Sunday = Label(NewFrame ,text ="Sunday", bg = "White", height = 5, width = 14)
-        Sunday.grid(row = 1, column = 1)
-
-        labelA1 = Label(NewFrame, text = A1, bg = "White", height = 5, width = 14)
-        labelA1.grid(row = 1, column = 2)
-
-        labelA2 = Label(NewFrame ,text = A2, bg = "White", height = 5, width = 14)
-        labelA2.grid(row = 1, column = 3)
-
-        labelA3 = Label(NewFrame, text = A3, bg = "White", height = 5, width = 14)
-        labelA3.grid(row = 1, column = 4)
-
-        labelA4 = Label(NewFrame ,text = A4, bg = "White", height = 5, width = 14)
-        labelA4.grid(row = 1, column = 5)
-
-        labelA5 = Label(NewFrame, text = A5, bg = "White", height = 5, width = 14)
-        labelA5.grid(row = 1, column = 6)
-
-        labelA6 = Label(NewFrame, text = A6, bg = "White", height = 5, width = 14)
-        labelA6.grid(row = 1, column = 7)
-
-        labelA7 = Label(NewFrame, text = A7, bg = "White", height = 5, width = 14)
-        labelA7.grid(row = 1, column = 8)
-
-        labelA8 = Label(NewFrame, text = A8, bg = "White", height = 5, width = 14)
-        labelA8.grid(row = 1, column = 9)
-        #Monday:
-        Monday = Label(NewFrame, text = "Monday", bg = "White", height = 5, width = 14)
-        Monday.grid(row = 2, column = 1)
-
-        LabelB1 = Label(NewFrame, text = B1, bg = "White", height = 5, width = 14)
-        LabelB1.grid(row = 2, column = 2)        
-
-        LabelB2 = Label(NewFrame, text = B2, bg = "White", height = 5, width = 14)
-        LabelB2.grid(row = 2, column = 3)        
-
-        LabelB3 = Label(NewFrame, text = B3, bg = "White", height = 5, width = 14)
-        LabelB3.grid(row = 2, column = 4)        
-
-        LabelB4 = Label(NewFrame, text = B4, bg = "White", height = 5, width = 14)
-        LabelB4.grid(row = 2, column = 5)        
-
-        LabelB5 = Label(NewFrame, text = B5, bg = "White", height = 5, width = 14)
-        LabelB5.grid(row = 2, column = 6)        
-
-        LabelB6 = Label(NewFrame, text = B6, bg = "White", height = 5, width = 14)
-        LabelB6.grid(row = 2, column = 7)
-
-        LabelB7 = Label(NewFrame, text = B7, bg = "White", height = 5, width = 14)
-        LabelB7.grid(row = 2, column = 8)
-
-        LabelB8 = Label(NewFrame, text = B8, bg = "White", height = 5, width = 14)
-        LabelB8.grid(row = 2, column = 9)        
-        #Tuesday:
-        Tuesday = Label(NewFrame, text = "Tuesday", bg = "White", height = 5, width = 14)
-        Tuesday.grid(row = 3, column = 1)        
-
-        LabelC1 = Label(NewFrame, text = C1, bg = "White", height = 5, width = 14)
-        LabelC1.grid(row = 3, column = 2)        
-
-        LabelC2 = Label(NewFrame, text = C2, bg = "White", height = 5, width = 14)
-        LabelC2.grid(row = 3, column = 3)        
-
-        LabelC3 = Label(NewFrame, text = C3, bg = "White", height = 5, width = 14)
-        LabelC3.grid(row = 3, column = 4)        
-
-        LabelC4 = Label(NewFrame, text = C4, bg = "White", height = 5, width = 14)
-        LabelC4.grid(row = 3, column = 5)
-
-        LabelC5 = Label(NewFrame, text = C5, bg = "White", height = 5, width = 14)
-        LabelC5.grid(row = 3, column = 6)        
-
-        LabelC6 = Label(NewFrame, text = C6, bg = "White", height = 5, width = 14)
-        LabelC6.grid(row = 3, column = 7)        
-
-        LabelC7 = Label(NewFrame, text = C7, bg = "White", height = 5, width = 14)
-        LabelC7.grid(row = 3, column = 8)        
-
-        LabelC8 = Label(NewFrame, text = C8, bg = "White", height = 5, width = 14)
-        LabelC8.grid(row = 3, column = 9)
-        #Wednesday:
-        Wednesday = Label(NewFrame, text = "Wednesday", bg = "White", height = 5, width = 14)
-        Wednesday.grid(row = 4, column = 1)        
-
-        LabelD1 = Label(NewFrame, text = D1, bg = "White", height = 5, width = 14)
-        LabelD1.grid(row = 4, column = 2)        
-
-        LabelD2 = Label(NewFrame, text = D2, bg = "White", height = 5, width = 14)
-        LabelD2.grid(row = 4, column = 3)        
-
-        LabelD3 = Label(NewFrame, text = D3, bg = "White", height = 5, width = 14)
-        LabelD3.grid(row = 4, column = 4)
-
-        LabelD4 = Label(NewFrame, text = D4, bg = "White", height = 5, width = 14)
-        LabelD4.grid(row = 4, column = 5)        
-
-        LabelD5 = Label(NewFrame, text = D5, bg = "White", height = 5, width = 14)
-        LabelD5.grid(row = 4, column = 6)        
-
-        LabelD6 = Label(NewFrame, text = D6, bg = "White", height = 5, width = 14)
-        LabelD6.grid(row = 4, column = 7)
-
-        LabelD7 = Label(NewFrame, text = D7, bg = "White", height = 5, width = 14)
-        LabelD7.grid(row = 4, column = 8)        
-
-        LabelD8 = Label(NewFrame, text = D8, bg = "White", height = 5, width = 14)
-        LabelD8.grid(row = 4, column = 9)        
-        #Thursday:
-        Thursday = Label(NewFrame, text = "Thursday", bg = "White", height = 5, width = 14)
-        Thursday.grid(row = 5, column = 1)
-
-        LabelE1 = Label(NewFrame, text = E1, bg = "White", height = 5, width = 14)
-        LabelE1.grid(row = 5, column = 2)        
-
-        LabelE2 = Label(NewFrame, text = E2, bg = "White", height = 5, width = 14)
-        LabelE2.grid(row = 5, column = 3)        
-
-        LabelE3 = Label(NewFrame, text = E3, bg = "White", height = 5, width = 14)
-        LabelE3.grid(row = 5, column = 4)
-
-        LabelE4 = Label(NewFrame, text = E4, bg = "White", height = 5, width = 14)
-        LabelE4.grid(row = 5, column = 5)        
-
-        LabelE5 = Label(NewFrame, text = E5, bg = "White", height = 5, width = 14)
-        LabelE5.grid(row = 5, column = 6)        
-
-        LabelE6 = Label(NewFrame, text = E6, bg = "White", height = 5, width = 14)
-        LabelE6.grid(row = 5, column = 7)
-
-        LabelE7 = Label(NewFrame, text = E7, bg = "White", height = 5, width = 14)
-        LabelE7.grid(row = 5, column = 8)        
-
-        LabelE8 = Label(NewFrame, text = E8, bg = "White", height = 5, width = 14)
-        LabelE8.grid(row = 5, column = 9)   
-
-
-        
-        NewFrame.pack() 
-        
-        
+        for a, b, c, d in zip(TheClassNoList, TheClassNoList, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c-1, column = d)
         
        
+    #Sunday:
+        Sunday = Label(ScheduleFrame ,text ="Sunday", bg = "White", height = 5, width = 14)
+        Sunday.grid(row = 1, column = 1)
+        
+        TheList1A = ['LabelA1', 'LabelA2', 'LabelA3', 'LabelA4', 'LabelA5', 'LabelA6', 'Label A7', 'Label A8']
+        TheList2A = [A1, A2, A3, A4, A5, A6, A7, A8]
+
+        for a, b, c, d in zip(TheList1A, TheList2A, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c, column = d)
+
+       
+    #Monday:
+        Monday = Label(ScheduleFrame, text = "Monday", bg = "White", height = 5, width = 14)
+        Monday.grid(row = 2, column = 1)
+        
+        TheList1B = ['LabelB1', 'LabelB2', 'LabelB3', 'LabelB4', 'LabelB5', 'LabelB6', 'Label B7', 'Label B8']
+        TheList2B = [B1, B2, B3, B4, B5, B6, B7, B8]
+        
+        for a, b, c, d in zip(TheList1B, TheList2B, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c+1, column = d)
+
+        
+   #Tuesday:
+        Tuesday = Label(ScheduleFrame, text = "Tuesday", bg = "White", height = 5, width = 14)
+        Tuesday.grid(row = 3, column = 1)    
+
+        TheList1C = ['LabelC1', 'LabelC2', 'LabelC3', 'LabelC4', 'LabelC5', 'LabelC6', 'Label C7', 'Label C8']
+        TheList2C = [C1, C2, C3, C4, C5, C6, C7, C8]
+        
+        for a, b, c, d in zip(TheList1C, TheList2C, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c+2, column = d)        
+
+        
+    #Wednesday:
+        Wednesday = Label(ScheduleFrame, text = "Wednesday", bg = "White", height = 5, width = 14)
+        Wednesday.grid(row = 4, column = 1)        
+
+        TheList1D = ['LabelD1', 'LabelD2', 'LabelD3', 'LabelD4', 'LabelD5', 'LabelD6', 'Label D7', 'Label D8']
+        TheList2D = [D1, D2, D3, D4, D5, D6, D7, D8]
+        
+        for a, b, c, d in zip(TheList1D, TheList2D, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c+3, column = d)        
+
+
+    #Thursday:
+        Thursday = Label(ScheduleFrame, text = "Thursday", bg = "White", height = 5, width = 14)
+        Thursday.grid(row = 5, column = 1)
+
+        TheList1E = ['LabelE1', 'LabelE2', 'LabelE3', 'LabelE4', 'LabelE5', 'LabelE6', 'Label E7', 'Label E8']
+        TheList2E = [E1, E2, E3, E4, E5, E6, E7, E8]
+        
+        for a, b, c, d in zip(TheList1E, TheList2E, TheList3, TheList4):
+            a = Label(ScheduleFrame, text = b, bg = "White", height = 5, width = 14)
+            a.grid(row = c+4, column = d)        
+
+ 
+        
+        DateFrame = Frame(Window2)
+        DateLabel = Label(DateFrame, text = "Date: %s"%Date, bg = "white", height = 3, width = 133)
+        
+        
+        
+        DateLabel.pack()
+        ScheduleFrame.pack()
+        DateFrame.pack() 
         Window2.mainloop()
 
 
